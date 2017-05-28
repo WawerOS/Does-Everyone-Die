@@ -6,7 +6,7 @@ clc;clear;
 beta = .003;
 gamma = .6;
 nu = .2;
-N = 100;
+N = 400;
 
 x1i = 0;
 x1f = 200;
@@ -16,9 +16,12 @@ n = 40;
 
 percent_sick = .3;
 % System of DE
-f = @(x1,x2) -beta.*x1.*x2 - nu*x1 - nu*x2 +nu*N;
+%f = @(x1,x2) -beta.*x1.*x2 - nu*x1 - nu*x2 +nu*N;
+%g = @(x1,x2) (beta.*x1 - gamma).*x2;
+
+f = @(x1,x2) -beta.*x1.*x2;
 g = @(x1,x2) (beta.*x1 - gamma).*x2;
-tInt = [-100,100];
+tInt = [0,1.8];
 x0 = [N*(1-percent_sick),N*percent_sick];
 func = @(t,x) [f(x(1),x(2)); ...
                g(x(1),x(2))];
