@@ -1,13 +1,13 @@
 %% S_approx
 clear;
 
-N = 4;
-S_num = 100;
+N = 20;
+S_num = 41;
 S_df = linspace(280,140,S_num);
 S0= 280;
 gamma = .6;
 beta = .003;
-
+M = 10e-8;
 % Expanding e^x as an Nth order taylor polynomial
 for ix = 1:N + 1
     exp_expand(N-ix + 2) = 1/factorial(ix - 1);
@@ -23,7 +23,7 @@ lin_eq = zeros(N,N);
 for ix = 1:N
     for iy = 1:N
         inputs = remove(root',iy);
-        lin_eq(ix,iy) = (-1)^(N-ix-1)*elsympol(inputs',ix-1);
+        lin_eq(ix,iy) = (-1)^(ix - 1)*elsympol(M*inputs',ix-1)*M^(N-1 - (ix -1));
     end
 end
 
@@ -34,4 +34,5 @@ t = zeros(1,S_num);
 for in = 1:N
     t = t + coeff(in).*log((S_df - root(in))/(S0 - root(in)));
 end
+t = M^(N-1)*t;
 t = 2.8*t;
