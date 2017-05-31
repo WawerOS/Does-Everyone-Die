@@ -9,9 +9,9 @@ nu = .2;
 N = 400;
 
 x1i = 0;
-x1f = 200;
+x1f = gamma/beta+20;
 x2i = 0;
-x2f = 200;
+x2f = gamma/beta+20;
 n = 40;
 
 percent_sick = .3;
@@ -21,7 +21,8 @@ percent_sick = .3;
 
 f = @(x1,x2) -beta.*x1.*x2;
 g = @(x1,x2) (beta.*x1 - gamma).*x2;
-tInt = [0,1.8];
+%tInt = [0,1.8];
+tInt = [-100,100];
 x0 = [N*(1-percent_sick),N*percent_sick];
 func = @(t,x) [f(x(1),x(2)); ...
                g(x(1),x(2))];
@@ -39,7 +40,7 @@ u = dx1./sqrt(dx1.^2 + dx2.^2);
 v = dx2./sqrt(dx1.^2 + dx2.^2);
 
 %% Display
-quiver(X1,X2,u,v,.4,'r')
+quiver(X1,X2,u,v,1,'r')
 hold on
     plot(X(:,1),X(:,2),'k');
 hold off
