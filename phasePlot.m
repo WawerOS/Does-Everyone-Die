@@ -84,7 +84,7 @@ function phasePlot(fg, x0, offset,ax)
     hold(ax,'off')
     
     hold(ax,'on')
-        p2 = fimplicit(ax,fg{1}, 'b', axisRange);
+        p2 = fimplicit(ax,fg{1}, 'b', axisRange,'linewidth',1.5);
         
     hold(ax,'off')
     
