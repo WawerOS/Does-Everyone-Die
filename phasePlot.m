@@ -1,12 +1,8 @@
-function phasePlot(func)
+function phasePlot(fg,x0,ax)
     %% function phasePlot
     tic
     
     %% Data and constant
-    beta = 3e-3;
-    gamma = .6;
-    nu = .2;
-    N= 4e2;
     
     xif = {
         0, 200;
@@ -15,30 +11,19 @@ function phasePlot(func)
     
     n = 40; 
     
-    
     % System of DiffEq
-    
-    fg = {
-        @(x,y)-beta.*x.*y
-        @(x,y)y.*(beta.*x-gamma)
-    };
-    
     tInt = [
-        0
-        1.8
+        -100
+        100
     ]';
     
-    sickPerc = .3;
-    x0 = N * ([1 0] - sickPerc * [1 -1]);
-    
-    %{
     func = @(t,x)[
         fg{1}(x(1),x(2))
         fg{2}(x(1),x(2))
     ];
-    %}
     
-    [T, X] = ode45(func, tInt, x0);
+    
+    [~, X] = ode45(func, tInt, x0);
     
     xn = cell(1, 2);
     parfor ind = 1 : numel(xn)
@@ -68,36 +53,26 @@ function phasePlot(func)
     
     %% Output result
     axisRange = [xif{1, :}, xif{2, :}];
-    scale = .4;
-    quiver(Xn{:}, uv{:}, scale, 'r')
-    hold on
-    plot(X(:, 1), X(:, 2), 'k')
-    % fimplicit(fg{1}, 'b', axisRange)
-    % fimplicit(fg{2}, 'g', axisRange)
-    hold off
-    axis(axisRange)
-    xlabel x1, ylabel y1
+    scale = .7;
+    quiver(ax,Xn{:}, uv{:}, scale, 'r')
+    hold(ax,'on')
+        p1 = plot(ax,X(:, 1), X(:, 2), 'k');
+        %legend()
+    hold(ax,'off')
     
+    hold(ax,'on')
+        p2 = fimplicit(ax,fg{1}, 'b', axisRange);
+        %legend()
+    hold(ax,'off')
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    hold(ax,'on')
+        p3 = fimplicit(ax,fg{2}, 'g', axisRange);
+
+    hold(ax,'off')
+   
+    legend([p1,p2,p3],'ode solution','S-Nullcline','I-Nullclines')
+    axis(ax,axisRange)
+    xlabel(ax,'x1'), ylabel(ax,'y1')
     
     
     
