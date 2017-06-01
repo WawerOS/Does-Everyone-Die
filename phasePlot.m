@@ -1,4 +1,4 @@
-function phasePlot(fg, x0, ax)
+function phasePlot(fg, x0, offset,ax)
     %% function phasePlot(fg, x0, ax)
     % fg
     %    The differential equations whose right-hand-side's represented as
@@ -17,19 +17,19 @@ function phasePlot(fg, x0, ax)
     % SEE ALSO: ODE45, AXES, GCA, CELL, FIMPLICIT
     
     %% Default argument
-    if nargin < 3; ax = gca; end
+    if nargin < 4; ax = gca; end
     
     %% Version Filter for fimplicit
     % fimplicit is introduced in R2016b, namely MatLab 9.1
     if verLessThan('matlab', '9.1')
-        fimplicit = @(~,~,~,~)0;
+       % fimplicit = @(~,~,~,~)0;
     end
     
     %% Data and constant
     
     xif = {
-        0, 200;
-        0, 200;
+        (0+offset(1)), (200+offset(1));
+        (0+offset(2)), (200+offset(2));
     };
     
     n = 40; 
@@ -85,7 +85,7 @@ function phasePlot(fg, x0, ax)
     
     hold(ax,'on')
         p2 = fimplicit(ax,fg{1}, 'b', axisRange);
-        %legend()
+        
     hold(ax,'off')
     
     hold(ax,'on')
