@@ -95,7 +95,7 @@ function phasePlot(fg, x0, ax)
    
     legend([p1,p2,p3],'ode solution','S-Nullcline','I-Nullclines')
     axis(ax,axisRange)
-    xlabel(ax,'x1'), ylabel(ax,'y1')
+    xlabel(ax,'S'), ylabel(ax,'I')
     
     
     
