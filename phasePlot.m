@@ -1,6 +1,29 @@
-function phasePlot(fg,x0,ax)
-    %% function phasePlot
-    tic
+function phasePlot(fg, x0, ax)
+    %% function phasePlot(fg, x0, ax)
+    % fg
+    %    The differential equations whose right-hand-side's represented as
+    %    functions, in CELL ARRAYS.
+    % x0
+    %    The initial value for SIR or SIRS models with the like of [S;I].
+    % ax
+    %    An axes object to hold all the graphical outputs.
+    %    Defaults to result of gca.
+    %
+    % Note: fimplicit functionality has not been added to matlab until
+    % R2016b, so recommended matlab version is at least R2016b. The
+    % function will still run without errors but cannot graph nullclines at
+    % all. 
+    %
+    % SEE ALSO: ODE45, AXES, GCA, CELL, FIMPLICIT
+    
+    %% Default argument
+    if nargin < 3; ax = gca; end
+    
+    %% Version Filter for fimplicit
+    % fimplicit is introduced in R2016b, namely MatLab 9.1
+    if verLessThan('matlab', '9.1')
+        fimplicit = @(~,~,~,~)0;
+    end
     
     %% Data and constant
     
